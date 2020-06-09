@@ -49,7 +49,8 @@ public class CommentDataServlet extends HttpServlet {
      * content "hi there" will be represented as:
      *    {id : "3454545346", content : "hi there"}
      */
-    public void doGet(HttpServletRequest request, 
+    @Override
+    public void doGet(HttpServletRequest request,
                       HttpServletResponse response)
             throws ServletException, IOException {
         
@@ -65,7 +66,6 @@ public class CommentDataServlet extends HttpServlet {
                 Weblog weblog = c.getWeblogEntry().getWebsite();
                 if (weblog.hasUserPermission(rses.getAuthenticatedUser(), WeblogPermission.POST)) {
                     String content = Utilities.escapeHTML(c.getContent());
-                    content = WordUtils.wrap(content, 72);
                     content = StringEscapeUtils.escapeEcmaScript(content);
                     String json = "{ id: \"" + c.getId() + "\"," + "content: \"" + content + "\" }";
                     response.setStatus(HttpServletResponse.SC_OK);
@@ -88,6 +88,7 @@ public class CommentDataServlet extends HttpServlet {
      * Accepts request with comment 'id' parameter and replaces specified
      * comment's content with the content in the request.
      */
+    @Override
     public void doPut(HttpServletRequest request,
                       HttpServletResponse response)
             throws ServletException, IOException {
@@ -132,6 +133,7 @@ public class CommentDataServlet extends HttpServlet {
         }
     }
 
+    @Override
     public void doPost(HttpServletRequest request,
                       HttpServletResponse response)
             throws ServletException, IOException {
